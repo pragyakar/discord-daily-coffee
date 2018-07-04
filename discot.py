@@ -2,20 +2,20 @@ import discord
 from discord.ext import commands
 import asyncio
 from itertools import cycle
+import json, os
 
 TOKEN = 'NDY0MDIxMTcxNzQ3MjkxMTM3.Dh45CQ.uXa_FzlmTX6N2ke9McTtKmavk18'
 
 client = commands.Bot(command_prefix = '.')
-status = ['Paladins', 'Dota 2', 'Fornite', 'PUBG']
+client.remove_command('help')
+
+# -------------------------------> Event Actions
 
 @client.event
 async def on_ready():
     print('Bot Online')
 
-@client.event
-async def on_member_join(member):
-    role = discord.utils.get(member.server.roles, name = 'Basic')
-    await client.add_roles(member, role)
+status = ['Paladins', 'Dota 2', 'Fornite', 'PUBG']
 
 async def change_status():
     await client.wait_until_ready()
@@ -25,6 +25,8 @@ async def change_status():
         await client.change_presence(game = discord.Game(name = current_status))
         await asyncio.sleep(3600)
 
+# -------------------------------> Commands
+
 @client.command()
 async def echo(*args):
     output = ''
@@ -32,6 +34,19 @@ async def echo(*args):
         output += word
         output += ' '
     await client.say(output)
+
+@client.command(pass_context=True)
+async def help(ctx):
+    author = ctx.message.author
+
+    help_embed = discord.Embed(
+        color = discord.Color.orange()
+    )
+
+    help_embed.set_author(name='Help Menu')
+    help_embed.add_field(name='.echo', value='Returns whatever you type', inline = True)
+
+    await client.send_message(author, embed=help_embed)
 
 @client.command(pass_context = True)
 async def clear(ctx, amount = 100):
@@ -51,7 +66,7 @@ async def displayembed():
     myembed = discord.Embed(
         title = 'The Title',
         description = 'Some description here...',
-        colur = discord.Color.blue()
+        color = discord.Color.blue()
     )
     myembed.set_footer(text = 'This is footer')
     myembed.set_image(url='')
