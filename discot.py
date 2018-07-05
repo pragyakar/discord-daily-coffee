@@ -1,3 +1,4 @@
+import secret
 import discord
 from discord.ext import commands
 import asyncio
@@ -6,7 +7,8 @@ import json, os
 import random
 from astrology import getHoroscope 
 
-TOKEN = ''
+
+TOKEN = secret.creds['token']
 
 client = commands.Bot(command_prefix = '.')
 client.remove_command('help')
@@ -69,9 +71,9 @@ async def horoscope(*args):
         color = discord.Color.blue()
     )
     horoscope_embed.add_field(name='Todays Reading', value=horoscope, inline=False)
-    horoscope_embed.add_field(name='Mood', value=mood, inline=True)
-    horoscope_embed.add_field(name='Keywords', value=keywords, inline=True)
-    horoscope_embed.add_field(name='Intensity', value=intensity, inline=True)
+    horoscope_embed.add_field(name='Mood', value=mood, inline=False)
+    horoscope_embed.add_field(name='Keywords', value=keywords, inline=False)
+    horoscope_embed.add_field(name='Intensity', value=intensity, inline=False)
     await client.say(embed=horoscope_embed)
 
 @client.command(pass_context = True)
