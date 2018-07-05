@@ -5,7 +5,7 @@ import asyncio
 from itertools import cycle
 import json, os
 import random
-from astrology import getHoroscope 
+from helpers import getHoroscope, getJoke
 
 
 TOKEN = secret.creds['token']
@@ -75,6 +75,11 @@ async def horoscope(*args):
     horoscope_embed.add_field(name='Keywords', value=keywords, inline=False)
     horoscope_embed.add_field(name='Intensity', value=intensity, inline=False)
     await client.say(embed=horoscope_embed)
+
+@client.command()
+async def joke():
+    joke = getJoke()
+    await client.say(joke)
 
 @client.command(pass_context = True)
 async def clear(ctx, amount = 100):

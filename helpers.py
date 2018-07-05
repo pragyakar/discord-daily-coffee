@@ -6,5 +6,8 @@ def getHoroscope(zodiac):
     r = r.json()
     return r['sunsign'], r['date'], r['horoscope'], r['meta']['mood'], r['meta']['keywords'], r['meta']['intensity']
 
-getHoroscope('aries')
-
+def getJoke():
+    url = 'http://api.yomomma.info/'
+    r = requests.get(url)
+    r = r.json()
+    return r['joke']
