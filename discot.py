@@ -3,6 +3,8 @@ from discord.ext import commands
 import asyncio
 from itertools import cycle
 import json, os
+import random
+from astrology import getHoroscope 
 
 TOKEN = 'NDY0MDIxMTcxNzQ3MjkxMTM3.Dh45CQ.uXa_FzlmTX6N2ke9McTtKmavk18'
 
@@ -23,7 +25,7 @@ async def change_status():
     while not client.is_closed:
         current_status = next(status_message)
         await client.change_presence(game = discord.Game(name = current_status))
-        await asyncio.sleep(3600)
+        await asyncio.sleep(300)
 
 # -------------------------------> Commands
 
@@ -47,6 +49,30 @@ async def help(ctx):
     help_embed.add_field(name='.echo', value='Returns whatever you type', inline = True)
 
     await client.send_message(author, embed=help_embed)
+
+@client.command()
+async def coinflip():
+    turnout = ''
+    toss = random.randint(0,1)
+    if toss == 0:
+        turnout = 'heads'
+    else:
+        turnout = 'tails'
+
+    await client.say(turnout)
+
+@client.command()
+async def horoscope(*args):
+    sunsign, date, horoscope, mood, keywords, intensity = getHoroscope(args[0])
+    horoscope_embed = discord.Embed(
+        title = 'Daily Zodiac Horoscope - ' + sunsign,
+        color = discord.Color.blue()
+    )
+    horoscope_embed.add_field(name='Todays Reading', value=horoscope, inline=False)
+    horoscope_embed.add_field(name='Mood', value=mood, inline=True)
+    horoscope_embed.add_field(name='Keywords', value=keywords, inline=True)
+    horoscope_embed.add_field(name='Intensity', value=intensity, inline=True)
+    await client.say(embed=horoscope_embed)
 
 @client.command(pass_context = True)
 async def clear(ctx, amount = 100):
