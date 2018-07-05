@@ -5,7 +5,7 @@ import asyncio
 from itertools import cycle
 import json, os
 import random
-from helpers import getHoroscope, getJoke
+from helpers import getHoroscope, getJoke, getMovies
 
 
 TOKEN = secret.creds['token']
@@ -75,6 +75,21 @@ async def horoscope(*args):
     horoscope_embed.add_field(name='Keywords', value=keywords, inline=False)
     horoscope_embed.add_field(name='Intensity', value=intensity, inline=False)
     await client.say(embed=horoscope_embed)
+
+@client.command()
+async def movies():
+    now_showing_movies, coming_soon_movies = getMovies()
+    
+    now_showing = '\r\n'.join(now_showing_movies)
+    coming_soon = '\r\n'.join(coming_soon_movies)
+
+    movie_embed = discord.Embed(
+        title = 'Movies in QFX Cinemas',
+        color = discord.Color.green()
+    )
+    movie_embed.add_field(name='Now Showing', value=now_showing, inline=False)
+    movie_embed.add_field(name='Coming Soon', value=coming_soon, inline=False)
+    await client.say(embed=movie_embed)
 
 @client.command()
 async def joke():
