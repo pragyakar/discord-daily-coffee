@@ -6,7 +6,7 @@ import json, os
 import random
 from astrology import getHoroscope 
 
-TOKEN = 'NDY0MDIxMTcxNzQ3MjkxMTM3.Dh45CQ.uXa_FzlmTX6N2ke9McTtKmavk18'
+TOKEN = ''
 
 client = commands.Bot(command_prefix = '.')
 client.remove_command('help')
