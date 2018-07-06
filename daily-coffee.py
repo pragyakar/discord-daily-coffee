@@ -5,7 +5,7 @@ import asyncio
 from itertools import cycle
 import json, os
 import random
-from helpers import getHoroscope, getJoke, getMovies
+from helpers import getHoroscope, getJoke, getMovies, getNews
 
 
 TOKEN = secret.creds['token']
@@ -53,6 +53,17 @@ async def help(ctx):
     await client.send_message(author, embed=help_embed)
 
 @client.command()
+async def news():
+    news_list = getNews()
+    news = " - "+ '\r\n- '.join(news_list) 
+    news_embed = discord.Embed(
+        title = 'Daily News',
+        color = discord.Color.green()
+    )
+    news_embed.add_field(name='Top 10 Headlines from Nepal', value=news, inline=False)
+    await client.say(embed=news_embed)
+
+@client.command()
 async def coinflip():
     turnout = ''
     toss = random.randint(0,1)
@@ -80,8 +91,8 @@ async def horoscope(*args):
 async def movies():
     now_showing_movies, coming_soon_movies = getMovies()
     
-    now_showing = '\r\n'.join(now_showing_movies)
-    coming_soon = '\r\n'.join(coming_soon_movies)
+    now_showing = " - "+ '\r\n- '.join(now_showing_movies)
+    coming_soon = " - "+ '\r\n- '.join(coming_soon_movies)
 
     movie_embed = discord.Embed(
         title = 'Movies in QFX Cinemas',

@@ -18,6 +18,22 @@ def getJoke():
     j = j.json()
     return j['joke']
 
+def getNews():
+    news = []
+    try:
+        html = urlopen('http://kathmandupost.ekantipur.com/headlines')
+    except HttpError as error:
+        print(error)
+    except URLError:
+        print('Possible server issue')
+    else:
+        soup = BeautifulSoup(html.read(), 'html5lib')
+        tags = soup.findAll('div', {'class': 'item'})
+        for tag in tags:
+            headline = tag.find('a')
+            news.append(headline.getText())
+    return news[:10]
+
 def getMovies():
     now_showing = []
     comming_soon =  []
