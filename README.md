@@ -10,3 +10,5 @@
   <li>.coinflip - returns either heads or tails</li>
   <li>working on more...</li>
 </ul>
+
+<p>Open for contribuitions</p>
