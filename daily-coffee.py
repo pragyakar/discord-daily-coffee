@@ -44,12 +44,16 @@ async def help(ctx):
     author = ctx.message.author
 
     help_embed = discord.Embed(
-        color = discord.Color.orange()
+        title = 'daily Coffee - List of Commands',
+        color = discord.Color.green()
     )
-
-    help_embed.set_author(name='Help Menu')
-    help_embed.add_field(name='.echo', value='Returns whatever you type', inline = True)
-
+    help_embed.add_field(name='.echo', value='Returns whatever you type', inline = False)
+    help_embed.add_field(name='.news', value='Displays top 10 headline news from Nepal', inline = False)
+    help_embed.add_field(name='.coinflip', value='Flips a coin and displays either Heads or Tails', inline = False)
+    help_embed.add_field(name='.horoscope zodiac', value='Displays daily horoscope of your zodiac', inline = False)
+    help_embed.add_field(name='.movies', value='Displays list of movies now showing and coming soon', inline = False)
+    help_embed.add_field(name='.joke', value='Displays a yomama joke', inline = False)
+    help_embed.add_field(name='.movies', value='Displays list of movies now showing and coming soon', inline = False)
     await client.send_message(author, embed=help_embed)
 
 @client.command()
@@ -119,21 +123,6 @@ async def clear(ctx, amount = 100):
 @client.command()
 async def logout():
     await client.logout()
-
-@client.command()
-async def displayembed():
-    myembed = discord.Embed(
-        title = 'The Title',
-        description = 'Some description here...',
-        color = discord.Color.blue()
-    )
-    myembed.set_footer(text = 'This is footer')
-    myembed.set_image(url='')
-    myembed.set_thumbnail(url='')
-    myembed.set_author(name='Author Name', icon_url='')
-    myembed.add_field(name='Field Name 1', value='Field Value', inline = True)
-    myembed.add_field(name='Field Name 2', value='Field Value', inline = True)
-    await client.say(embed=myembed)
 
 client.loop.create_task(change_status())
 client.run(TOKEN)   
